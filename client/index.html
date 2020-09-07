@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" ng-app>
+
+<head>
+  <title>SciBowl Questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="js/angular.min.js"></script>
+  <script src="js/client.js"></script>
+  <style>
+    body {
+      padding-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" ng-controller="SciQuestions">
+
+    <div class="jumbotron">
+      <h1>Science Bowl Question Generator</h1>
+      <p>Practice for the National Science Bowl with a database of {{numQuestions}} questions!</p>
+      <!--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>-->
+    </div>
+
+    <div id="alert_placeholder"></div>
+
+    <div class="text-center" style="padding-bottom: 25px">
+      <button class="btn btn-primary btn-lg" data-ng-click="getQuestion()">{{getButtonText()}}</button>
+    </div>
+    <div class="well well-lg text-center" style="height:410px">
+      <div data-ng-bind="difficulty"></div>
+      <!--<strong><div ng-switch="bonus">
+          <ANY ng-switch-when=true>Bonus</ANY>
+          <ANY ng-switch-when=false>&nbsp;</ANY>
+        </div></strong>-->
+      <strong><div data-ng-bind="category"></div></strong>
+      <br>
+      <br>
+      <div data-ng-bind="question" style="padding-bottom: 10px"></div>
+
+      <ul class="list-group">
+        <li class="list-group-item" data-ng-repeat="choice in choices">{{choice}}</li>
+      </ul>
+
+      <div data-ng-bind="answer" style="border-top: 1px solid #ccc; padding-top: 10px" data-ng-hide="!showAnswer"></div>
+    </div>
+
+
+    <h3 class="text-center">Enabled Categories</h2>
+      <div class="btn-group btn-group-justified">
+        <a class="btn btn-default" aria-label="Math"ng-click="options.categories.math = !options.categories.math" ng-class="{'active' : options.categories.math}">Math<br><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+        <a class="btn btn-default" aria-label="Earth and Space" ng-click="options.categories.earthspace = !options.categories.earthspace" ng-class="{'active' : options.categories.chemistry}">Earth and Space<br><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>
+        <a class="btn btn-default" aria-label="Chemistry" ng-click="options.categories.chemistry = !options.categories.chemistry" ng-class="{'active' : options.categories.chemistry}">Chemistry<br><span class="glyphicon glyphicon-filter" aria-hidden="true"></span></a>
+        <a class="btn btn-default" aria-label="Biology" ng-click="options.categories.biology = !options.categories.biology" ng-class="{'active' : options.categories.biology}">Biology<br><span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span></a>
+        <a class="btn btn-default" aria-label="Physics" ng-click="options.categories.physics = !options.categories.physics" ng-class="{'active' : options.categories.physics}">Physics<br><span class="glyphicon glyphicon-plane" aria-hidden="false"></span></a>
+        <a class="btn btn-default" aria-label="Energy" ng-click="options.categories.energy = !options.categories.energy" ng-class="{'active' : options.categories.energy}">Energy<br><span class="glyphicon glyphicon-flash" aria-hidden="false"></span></a>
+        <a class="btn btn-default" aria-label="General" ng-click="options.categories.general = !options.categories.general" ng-class="{'active' : options.categories.general}">General<br><span class="glyphicon glyphicon-search" aria-hidden="false"></span></a>
+        <!--<a class="btn btn-default" aria-label="Computer Science" ng-click="options.categories.compsci = !options.categories.compsci" ng-class="{'active' : options.categories.compsci}">Computer Science<br><span class="glyphicon glyphicon-floppy-disk" aria-hidden="false"></span></a>-->
+      </div>
+      
+      <h3 class="text-center">Type</h2>
+      <div class="btn-group btn-group-justified center" style="width:50%; float: none; margin: 0 auto">
+        <a class="btn btn-default" aria-label="Multiple Choice" ng-click="options.types.multiple_choice = !options.types.multiple_choice" ng-class="{'active' : options.types.multiple_choice}">Multiple Choice</a>
+        <a class="btn btn-default" aria-label="Multiple Choice" ng-click="options.types.short_answer = !options.types.short_answer" ng-class="{'active' : options.types.short_answer}">Short Answer</a>
+      </div>
+      
+      <h3 class="text-center">Difficulties</h2>
+      <div class="btn-group btn-group-justified" style="width:50%; float: none; margin: 0 auto">
+        <a class="btn btn-default" aria-label="HS" ng-click="options.difficulties.HS = !options.difficulties.HS" ng-class="{'active' : options.difficulties.HS}">HS</a>
+        <a class="btn btn-default" aria-label="MS" ng-click="options.difficulties.MS = !options.difficulties.MS" ng-class="{'active' : options.difficulties.MS}">MS</a>
+      </div>
+      
+      <!--<h3 class="text-center">Bonus</h3>
+      <center><a class="btn btn-default" aria-label="Bonus" ng-click="options.bonus = !options.bonus" ng-class="{'active' : options.bonus}">Enable Bonus Questions</a></center>-->
+  </div>
+  <footer class="footer" style="padding-top: 50px">
+    <div class="container">
+      <p class="text-muted">Built by <a href="www.github.com/bobacadodl">Ankur Sundara</a> in March 2015, using Node.js, Express, and AngularJS</p>
+      <p class="text-muted">Revived by <a href="https://github.com/sarthaktexas">Sarthak Mohanty</a></p>
+    </div>
+  </footer>
+</body>
+
+</html>

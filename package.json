@@ -1,0 +1,14 @@
+{
+  "name": "SciBowl-Questions",
+  "version": "0.0.0",
+  "description": "A small app that uses socket.io, express server, and angular to fetch science bowl questions from the server",
+  "main": "server.js",
+  "repository": "",
+  "author": "Ankur Sundara <ankursundara@msn.com>",
+  "dependencies": {
+    "async": "~0.2.8",
+    "express": "~3.2.4",
+    "serve-favicon": "^2.5.0",
+    "socket.io": "~0.9.14"
+  }
+}
